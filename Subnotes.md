@@ -107,7 +107,7 @@ NetBIOS over TCP/IP (NBT)
 ```
 >sudo nmap -A –p 445 192.168.18.110
 >sudo nmap --script smb-os-discovery.nse 192.168.18.110
->sudo nmap -p 445 --script=smb-enum-shares.nse,smb-enumusers.nse 192.168.18.110
+>sudo nmap -p 445 --script=smb-enum-shares.nse,smb-enum-users.nse 192.168.18.110
 This guy -> >enum4linux -a 192.168.18.110
 ```
 
