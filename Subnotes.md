@@ -95,6 +95,23 @@ Or NMAP
 `>nmap -sV -v --script nbstat.nse 192.168.18.110`
 `>nmap -sU -p 137 --script nbstat.nse 192.168.18.110`
 
+# WPSCAN - Word Press Enum
+```
+>wpscan --url {URL} --enumerate u,p,t,vp --api-token {token}
+>wpscan --url {URL} --passwords {path to wordlist} --usernames {usernames}
+```
+Or Metasploit
+```
+>service postresql start
+>msconsole
+>use auxillary/scanner/wordpress_login_enum
+>set PASS_FILE {path to wordlist}
+>set RHOSTS {target IP}
+>set RPOST 8080
+>set TARGETURI {url}
+>set USENAME adminrun
+```
+
 # SMB Enumeration
 TCP port 445: This is the primary port used by SMB for file sharing and
 communication. It handles the majority of SMB traffic, including file access,
