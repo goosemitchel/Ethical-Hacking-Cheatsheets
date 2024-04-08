@@ -6,6 +6,7 @@
 >nmap -sC -sV -A {IP}
 >nmap --script vuln {IP}
 >ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -mc all -c -fc 404 -e .php,.html,.txt -u http://10.10.100.162/FUZZ
+```
 
 # Google Doorking/Search Engines
 
@@ -409,6 +410,52 @@ For Hardest use
 1’ UNION SELECT user, password FROM users #
 ```
 
+# Vulnerability Analysis
+In Parrot 
+Open OpenVas
+127.0.0.1:9392/login
+admin/password
+Scans -> Task
+Task Wizard - Enter target IP
+When completed view the report
+
+In Windows (Nessus)
+https://localhost:8834
+admin/password
+Policies -> New policy
+Advanced Scan
+    Basic
+        Set name
+        Set desc
+    Discovery
+        Port scanning
+            Tick Verify open TCP ports found by local port enumarators
+    Advanced
+        Max concurrent TCP both 'unlimited'
+    Credentials Tab
+        Windows
+            Username and password (already have, or found?)
+Save
+Scans
+    Create new scan
+    User defined
+    General Settings
+        Name
+        Desc
+        Target: Target IP
+    Save
+    Launch from dropdown menu
+Takes 15 minutes, then view report
+Can generate report
+
+In Parrot 
+Open Nikto (web vulnerability scanner)
+```
+>nikto -h {website} -Tuning x
+>nikto -h {website} -Cgidirs all
+-o output -F txt
+```
+
 # Malware Analysis
 Hybrid Analysis
 In Windows navigate to hybrid-analysis.com
@@ -429,11 +476,15 @@ Select target file
 Run
 
 # ELF Analysis using Detect It Easy (DIE)
-Run the tool, select target file
+On windows Run the tool, select target file
+Use side menus for different bits of information, info, hash, entropy, strings
 
 # Find the Portable Executable (PE) Information of a Malware Executable File
+For windows files
 Install and Launch PE explorer
 File-Open file
+Can view info, entry point, checksum, virtual address, tables, section headers, .text, .rdata, .data, .rsrc
+
 
 # Identify File Dependencies using Dependency Walker
 Start Dependency Walker
@@ -456,18 +507,19 @@ File import {target file}
 Double click to analyse
 
 # Gain Control over a Victim Machine using the njRAT RAT Trojan
-On windows get njRat and start on default port
-Click builder, provide target IP
+On windows get (from E drive maybe) njRat and start on default listening port (default port is 1177, may also use ports 8008 and 8521, 5552)
+Click builder, provide attacker IP
 Ensure registry startup is selected
 Click build
 Save to desktop
 Share via shared folder, email, whatsapp, file upload + command injection
-On attacker computer should be listed
-Right click and Manager, Remote desktop etc
+On attacker computer should be listed in njRat window on attacker
+Right click on machine name and click (file) Manager, Remote desktop, services (can kill), remote shell etc
 
 # Create a Trojan Server using Theef RAT Trojan
-Run Theef server on victim machine
-Run Theef client on attacker, provide target IP
+Run Theef SERVER on VICTIM machine (maybe from shared drive)
+Run Theef CLIENT on ATTACKER, provide target IP and port (default 6703, ftp 2968)
+Can get information, keys icon, browser etc
 
 # Detect DDOS attack with Wireshark
 ```
@@ -520,7 +572,7 @@ Now fire up the framework
 >python3 phonesploit.py
 Type in IP address of victim machine
 
-On android, ensure USB debuggin is on, and get IP address from WIfi Settings
+On android, ensure USB debugging is on, and get IP address from WIfi Settings
 On attacker
 >sudo nmap -sS -p- -Pn {target IP}
 ```
@@ -850,62 +902,62 @@ HTB download vpn, open terminal at location, >sudo openvpn {file}
 >cat c:/flag1.txt (change slashes if doent work)
 ```
 
-## Scenario #1
+## Example Scenario #1
 There is a machine running wamp server in the subnet. Provide the IP address of the server.
 - **Tips:** Scan the entire subnet with -A(aggressive scan) in nmap or use -sV(version flag). You can speed up the scan by specifying port with -p as 8080,80,443.
 - **Things to google:** Scanning with nmap
 
-## Scenario #2
+## Example Scenario #2
 Find the FQDN of the domain controller in the network.
 - **Tips:** Scan the entire subnet with -A(aggressive scan) in nmap. The FQDN will appear for the server.
 - **Things to google:** Scanning with nmap
 
-## Scenario #3
+## Example Scenario #3
 Identify the machine with smb enabled. Crack the smb credentials for the username given. Access an encrypted file and decode the encrypted file to retrieve the flag.
 - **Tips:** Scan the entire subnet for open smb ports. You can use the wordlist available on the desktop on Parrot os. Use Hydra to crack it. You can also use Metasploit to crack the password. Use Msfconsole auxiliary/scanner/smb/smb_login. The password for the encoded file is the same. If the file contains a hash, try to decode it.
 - **Things to google:** smb enumeration, FTP Exploitation.
 
-## Scenario #4
+## Example Scenario #4
 There is an Android device in the subnet. Identify the device. Get the files in scan folder. Provide SHA384 hash with the largest of entropy.
 - **Tips:** Scan the entire subnet to identify android device. Use Phonesploit, pull required folder to download files, check the entropy of all files (Detect it easy tool), and then calculate hash. (hashcalc)
 - **Things to google:** Hacking Android Devices with Phonesploit over ADB, Analyze ELF Executable File using Detect It Easy (DIE), Calculating Hashes on Windows with different tools
 
-## Scenario #5
+## Example Scenario #5
 Perform the vulnerability scan for the given IP address. What is the severe value of a vulnerability that indicates the end of life for a web development language platform?
 - **Tips:** Use Nessus to scan the target. Nessus will provide all results.
 - **Things to google:** -
 
-## Scenario #6
+## Example Scenario #6
 Exploit a remote login application on a Linux target in the given subnet to access a sensitive file. Enter the content of the file.
 - **Tips:** Use Hydra to break the password Telnet, login and access the file, and enter the flag
 - **Things to google:** FTP Exploitation. telnet exploitation
 
-## Scenario #7
+## Example Scenario #7
 Analyze the image file to extract the hidden message. Password is given.
 - **Tips:** Use Open stego to reveal the secret
 - **Things to google:** Image Steganography
 
-## Scenario #8
+## Example Scenario #8
 Exploit weak credentials of FTP. Obtain the hidden file.
 - **Tips:** Use Hydra to break the password, login and access the file, and enter the flag
 - **Things to google:** FTP Exploitation.
 
-## Scenario #9
+## Example Scenario #9
 Escalate privilege on a Linux machine. User-level credentials are given.
 - **Tips:** Use polkit exploit to get the root access
 - **Things to google:** Walkthrough - Escalate Privileges by Exploiting Vulnerability in pkexec
 
-## Scenario #10
+## Example Scenario #10
 Find a file entry point. File is given.
 - **Tips:** Use DIE(detect it easy) or exeinfo PE tools.
 - **Things to google:** Analyze ELF Executable File using Detect It Easy (DIE), Find the Portable Executable (PE) Information of a Malware Executable File
 
-## Scenario #11
+## Example Scenario #11
 From a pcap file, analyze a DDOS attack and provide the IP address that sent most packets.
 - **Tips:** Use Wireshark and statistics tab
 - **Things to google:** Detect DDOS attack with Wireshark
 
-## Scenario #12
+## Example Scenario #12
 You are provided a username/password for a website. Use SQL Injection attack to extract the password of another user.
 - **Tips:** Log in with the given credential. Use cookie to extract the password of a user from the table with sqlmap.
   - `$ sqlmap -u "URL" --cookie="captured cookie of logged in user" --dbs`    #for Database
@@ -914,7 +966,7 @@ You are provided a username/password for a website. Use SQL Injection attack to 
   - `$ sqlmap -u "URL" --cookie="captured cookie of logged in user" -D *DATABASE NAME* -T *TABLE NAME* --dump` #dump the table
 - **Things to google:** SQL Injection Vulnerabilities, SQL Injection Challenge (SQLMAP THM Free Room)
 
-## Scenario #13
+## Example Scenario #13
 Exploit a web application at www.xxxx.com and enter the flag value from a given page.
 - **Tips:** Find any input parameter on website and capture the request in burp and then use it to perform sql injection using sqlmap
   - `sqlmap -r <txt file from burpsuite> -D <database name> --tables`
@@ -923,38 +975,38 @@ Exploit a web application at www.xxxx.com and enter the flag value from a given 
   - `sqlmap -r <txt file from burpsuite> -D <database name> --tables -T users`
 - **Things to google:** SQL Injection Vulnerabilities, SQL Injection Challenge (SQLMAP THM Free Room)
 
-## Scenario #14
+## Example Scenario #14
 Perform vulnerability research and exploit the target at a given site.
 - **Tips:** Scan the target with Zapp to find the vulnerability. Then exploit it. It can be file upload/File inclusion vulnerability on DVWA.
 - **Things to google:** DVWA file upload, File Inclusion
 
-## Scenario #15
+## Example Scenario #15
 Perform SQL injection on a website and extract flag value.
 - **Tips:** Use sqlmap
 - **Things to google:** SQL Injection Vulnerabilities, SQL Injection Challenge (SQLMAP THM Free Room)
 
-## Scenario #16
+## Example Scenario #16
 A file is available in a directory with DVWA. Access the file and enter the contents.
 - **Tips:** Use the file inclusion mechanism to access the file
 - **Things to google:** DVWA File Inclusion
 
-## Scenario #17
+## Example Scenario #17
 Analyze IoT traffic from a pcap file. Identify the packet with the publish message and enter the length.
 - **Tips:** Open IoT capture file in Wireshark. Filter; MQTT and find length of the packet in the lower pane
 - **Things to google:** Detect IoT traffic
 
-## Scenario #18
+## Example Scenario #18
 Crack the weak credentials of wifi from a pcap file.
 - **Tips:** Use aircrack-ng to crack the password.
   - `$ aircrack-ng '*/target file.cap*' -w */wordlist*`
 - **Things to google:** Walkthrough - Perform Wireless Attacks, Crack Wifi with Aircrack
 
-## Scenario #19
+## Example Scenario #19
 A RAT server is installed on a server. Connect with it and access the file.
 - **Tips:** Scan all ports with nmap (-p-). Look for the unknown ports. Use theef RAT to connect to it.
 - **Things to google:** Create a Trojan Server using Theef RAT Trojan
 
-## Scenario #20
+## Example Scenario #20
 Decrypt the Veracrypt volume.
 - **Tips:** Use Veracrypt to decrypt the volume.
   - Use Veracrypt to log in the hidden drive
@@ -973,7 +1025,7 @@ Decrypt the Veracrypt volume.
   
 - **Scenario 7:** In image steganography, tools like `steghide` can also be useful. For a quick check without a passphrase, `steghide info file.jpg` can show if a passphrase is needed.
   
-- **Scenario 9:** For privilege escalation, always check for `sudo` misconfigurations with `sudo -l`. You might find you can run commands as another user without a password.
+- **Scenario 9:** For privilege escalation, always check for `sudo` misconfigurations with `sudo -l`. You might find you can run commands as another user without a password. `sudo -u alice cat /path/to/file`
   
 - **Scenario 12:** With SQL injection, using a proxy like Burp Suite to intercept and modify requests can provide valuable insights into how the application handles SQL queries, aiding in crafting effective payloads.
   
