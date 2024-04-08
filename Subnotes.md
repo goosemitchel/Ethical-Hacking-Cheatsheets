@@ -1,6 +1,7 @@
 # Quick Start
 ```
 >netdiscover -r {any target}/24
+>nmap -sn {any target}/24
 >nmap -Pn -sS -A -oA nmap.xml 10.10.1.1/24 -vv && xsltproc nmap.xml -o nmap.html
 >ping {IP}
 >nmap -sC -sV -A {IP}
