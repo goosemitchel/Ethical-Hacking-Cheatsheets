@@ -4,6 +4,7 @@
 >nmap -sn {any target}/24
 >nmap -Pn -sS -A -oA nmap.xml 10.10.1.1/24 -vv && xsltproc nmap.xml -o nmap.html
 >ping {IP}
+>dnsenum zonetransfer.me
 >nmap -sC -sV -A {IP}
 >nmap --script vuln {IP}
 >ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -mc all -c -fc 404 -e .php,.html,.txt -u http://10.10.100.162/FUZZ
@@ -241,7 +242,7 @@ Back on reverse shell listener
 
 We will be exploiting the pkexec CVE-2021-4034 vulnerability
 LinPeas (github) to check for privilege escalation
-From linpeas out put pick pwnkit and search google for pwnkit on github
+From linpeas out put pick pwnkit and search google for pwnkit on github (also available in iLabs)
 ```
 >cd /tmp
 >git clone {github url}
@@ -911,7 +912,7 @@ There is a machine running wamp server in the subnet. Provide the IP address of 
 ## Example Scenario #2
 Find the FQDN of the domain controller in the network.
 - **Tips:** Scan the entire subnet with -A(aggressive scan) in nmap. The FQDN will appear for the server.
-- **Things to google:** Scanning with nmap
+- **Things to google:** Scanning with nmap, smb-os-discovery script can reveal whether a machine is a domain controller
 
 ## Example Scenario #3
 Identify the machine with smb enabled. Crack the smb credentials for the username given. Access an encrypted file and decode the encrypted file to retrieve the flag.
