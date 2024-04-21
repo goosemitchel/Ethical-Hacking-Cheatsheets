@@ -1032,6 +1032,10 @@ Exploit weak credentials of FTP. Obtain the hidden file.
 
 ## Example Scenario #9
 Escalate privilege on a Linux machine. User-level credentials are given.
+```
+Try >sudo su
+Try >sudo -l
+```
 - **Tips:** Use polkit exploit to get the root access
 - **Things to google:** Walkthrough - Escalate Privileges by Exploiting Vulnerability in pkexec
 
