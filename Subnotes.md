@@ -336,9 +336,10 @@ Ref https://academy.hackthebox.com/module/77/section/844
 # Escalate Privileges (advanced)
 ```
 >ssh {user}@{targetIP}
->ls
+>ls -l
 >stat -c "%a %A %U %G %F" {filename}
-
+Look for executable files or files with more permisssions
+>cp /bin/bash
 ```
 
 # Covert Communication
@@ -1119,7 +1120,7 @@ Decrypt the Veracrypt volume.
   - Use Veracrypt to log in the hidden drive
   - Password is hidden in another machine
   - Open file
-  - Decrypt the hash and enter the contents
+  - Decrypt the hash and enter the contents (https://crackstation.net/)
 - **Things to google:** Disk Encryption Using Veracrypt, Calculating Hashes on Windows with different tools
 
 ## Final Tips
