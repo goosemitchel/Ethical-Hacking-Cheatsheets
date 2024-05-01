@@ -251,6 +251,7 @@ Back on reverse shell listener
 ```
 
 # Escalate Privileges by Exploiting Vulnerability in pkexec (CEH Lab)
+Run scripts remotely https://superuser.com/questions/130443/remotely-run-script-on-unix-get-output-locally
 
 We will be exploiting the pkexec CVE-2021-4034 vulnerability
 LinPeas (github) to check for privilege escalation
@@ -340,6 +341,11 @@ Ref https://academy.hackthebox.com/module/77/section/844
 >stat -c "%a %A %U %G %F" {filename}
 Look for executable files or files with more permisssions
 >cp /bin/bash
+```
+
+# Escalate Privileges (multiple)
+```
+
 ```
 
 # Covert Communication
