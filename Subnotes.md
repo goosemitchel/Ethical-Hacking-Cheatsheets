@@ -1022,6 +1022,13 @@ Identify the machine with smb enabled. Crack the smb credentials for the usernam
 Check hydra-sheet
 - **Tips:** Scan the entire subnet for open smb ports. You can use the wordlist available on the desktop on Parrot os. Use Hydra to crack it. You can also use Metasploit to crack the password. Use Msfconsole auxiliary/scanner/smb/smb_login. The password for the encoded file is the same. If the file contains a hash, try to decode it.
 - **Things to google:** smb enumeration, FTP Exploitation.
+- Transfer Files
+```
+>cd {targetDirectory}
+>python -m SimpleHTTPServer 9000
+OR
+>python3 -m http.server 9000
+```
 
 ## Example Scenario #4
 There is an Android device in the subnet. Identify the device. Get the files in scan folder. Provide SHA384 hash with the largest of entropy.
@@ -1032,6 +1039,13 @@ There is an Android device in the subnet. Identify the device. Get the files in 
 - https://products.aspose.app/pdf/hash-generator/sha384
 - https://emn178.github.io/online-tools/sha384_file_hash.html
 - **Things to google:** Hacking Android Devices with Phonesploit over ADB, Analyze ELF Executable File using Detect It Easy (DIE), Calculating Hashes on Windows with different tools
+Transfer Files
+```
+>cd {targetDirectory}
+>python -m SimpleHTTPServer 9000
+OR
+>python3 -m http.server 9000
+```
 
 ## Example Scenario #5
 Perform the vulnerability scan for the given IP address. What is the severe value of a vulnerability that indicates the end of life for a web development language platform?
