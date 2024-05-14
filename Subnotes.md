@@ -1039,6 +1039,10 @@ There is an Android device in the subnet. Identify the device. Get the files in 
 - https://products.aspose.app/pdf/hash-generator/sha384
 - https://emn178.github.io/online-tools/sha384_file_hash.html
 - **Things to google:** Hacking Android Devices with Phonesploit over ADB, Analyze ELF Executable File using Detect It Easy (DIE), Calculating Hashes on Windows with different tools
+Find folder
+```
+find / -type d -iname Scan 2> /dev/null
+```
 Transfer Files
 ```
 >cd {targetDirectory}
